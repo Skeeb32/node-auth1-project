@@ -44,19 +44,33 @@ router.post('/login', (req, res) => {
 		});
 });
 
+// router.get('/logout', restricted, (req, res) => {
+// 	if (req.session) {
+// 		req.session.destroy((err) => {
+// 			if (err) {
+// 				console.log(err);
+// 				return res.status(500).json({ message: 'There was an error' });
+// 			}
+
+// 			res.end();
+// 		});
+// 	} else {
+// 		res.end();
+// 	}
+// });
 router.get('/logout', restricted, (req, res) => {
 	if (req.session) {
 		req.session.destroy((err) => {
 			if (err) {
+				res.json({ message: 'you can checkout any time you like, but you can never leave'})
 				console.log(err);
-				return res.status(500).json({ message: 'There was an error' });
+			} else {
+				res.status(200).json ({ message: 'by, thanks for playing!'});
 			}
-
-			res.end();
-		});
+		})
 	} else {
-		res.end();
+		res.status(200).json({ message: 'You were never here to begin with'})
 	}
-});
+})
 
 module.exports = router;
